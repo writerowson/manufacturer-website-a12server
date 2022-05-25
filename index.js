@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 require('dotenv').config()
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const res = require('express/lib/response');
 const port = process.env.PORT || 5000
 // use middleware
@@ -24,9 +24,18 @@ async function run() {
             const cursor = toolCollection.find(query)
             const tools = await cursor.toArray()
             res.send(tools)
-            console.log(tools);
-        })
 
+        })
+        app.get('/tools/:id', async (req, res) => {
+            const id = req.params.id;
+            console.log(id)
+            const query = { _id: ObjectId(id) };
+            // to find one  use findONE
+            const tool = await toolCollection.findOne(query)
+            console.log(tool);
+            res.send(tool)
+
+        })
     }
     finally {
 
