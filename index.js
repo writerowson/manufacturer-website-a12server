@@ -18,6 +18,7 @@ async function run() {
         await client.connect();
         console.log('all connected');
         const toolCollection = client.db("assignment12").collection("tools");
+        // to get all tools data
         app.get('/tools', async (req, res) => {
             const query = {}
             // cursor for multiple item
@@ -26,6 +27,7 @@ async function run() {
             res.send(tools)
 
         })
+        // to get single tool data
         app.get('/tools/:id', async (req, res) => {
             const id = req.params.id;
             console.log(id)
