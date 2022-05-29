@@ -26,6 +26,7 @@ async function run() {
         console.log('all connected');
         const toolCollection = client.db("assignment12").collection("tools");
         const orderCollection = client.db("assignment12").collection("orders");
+        const userCollection = client.db("assignment12").collection("user");
         // to get all tools data
         app.get('/tools', async (req, res) => {
             const query = {}
@@ -52,8 +53,12 @@ async function run() {
             const result = await orderCollection.insertOne(order)
             res.send(result)
         })
-
-
+        // add User
+        app.put('/user', (req, res) => {
+            const newUser = req.body
+            console.log('adding new user', newUser);
+            res.send('user data received')
+        })
 
 
     }
@@ -73,6 +78,12 @@ run().catch(console.dir)
 app.get('/', (req, res) => {
     res.send('Running my assignment')
 })
+
+// jwt API
+app.post('/login', (req, res) => {
+    res.send({ success: true })
+})
+
 
 app.listen(port, () => {
     console.log(' server is running')
