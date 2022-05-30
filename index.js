@@ -64,8 +64,15 @@ async function run() {
             res.send(tool)
 
         })
+        // to get all order
+        app.get('/order', verifyJWT, async (req, res) => {
+            const user = req.body.userEmail;
+            const query = { user: user }
+            const orders = await orderCollection.find(query).toArray()
+            res.send(orders)
+        })
         // to add new order
-        app.post('/order', verifyJWT, async (req, res) => {
+        app.post('/order', async (req, res) => {
             const order = req.body;
             const result = await orderCollection.insertOne(order)
             res.send(result)
